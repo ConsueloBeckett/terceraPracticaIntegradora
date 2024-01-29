@@ -27,4 +27,16 @@ viewsRouter.get("/addProducts", authorizedRole("admin"), (req, res) => {
     })
 })
 
+viewsRouter.post("/api/form", async (req, res) => {
+    res.render("form", {
+        title: "Miling",
+    })
+})
+
+viewsRouter.get("/form", async (req, res) => {
+    res.render("form", {
+        title: "EnvioCorreo",
+    })
+})
+
 export default viewsRouter

@@ -12,11 +12,12 @@ import viewsRouter from "./router/views.routes.js"
 import productsRouter from "./router/products.routes.js"
 import cartsRouter from "./router/carts.routes.js"
 import userRouter from "./router/user.routes.js"
+import nodemailer from "nodemailer"
+
 dotenv.config()
 
 const app = express()
 const PORT = 8080
-app.listen(PORT, () => console.log(`Listening to the port ${PORT}`))
 
 connectMongo()
 
@@ -24,6 +25,7 @@ app.use(session(sessionConfig))
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
+//middleware
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -37,3 +39,9 @@ app.use("/", viewsRouter)
 app.use("/api/users", userRouter)
 app.use("/api/carts", cartsRouter)
 app.use("/api/products", productsRouter)
+//app.use("/api/form", )
+
+
+
+
+app.listen(PORT, () => console.log(`Listening to the port ${PORT}`))
