@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// Configurar el transporte nodemailer
+
 const transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {

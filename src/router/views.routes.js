@@ -4,39 +4,46 @@ import authorizedRole from "../config/auth.config.js";
 const viewsRouter = express.Router()
 
 
-viewsRouter.get("/inicio", async (req, res) => {
+viewsRouter.get("/home", async (req, res) => {
     res.render("inicio", {
-        title: "App de compras",
+        title: "Buy application",
     })
 })
+
 viewsRouter.get("/register", (req, res) => {
     res.render("register", {
-        title: "Registro de Usuario"
+        title: "Register User"
     })
 })
 
 viewsRouter.get("/login", (req, res) => {
     res.render("login", {
-        title: "Login de Usuario"
+        title: "Login User"
     })
 })
 
 viewsRouter.get("/addProducts", authorizedRole("admin"), (req, res) => {
     res.render("addProducts", {
-        title: "Agregar Productos"
-    })
-})
-
-viewsRouter.post("/api/form", async (req, res) => {
-    res.render("form", {
-        title: "Miling",
+        title: "Add Products"
     })
 })
 
 viewsRouter.get("/form", async (req, res) => {
     res.render("form", {
-        title: "EnvioCorreo",
+        title: "Sent Email",
     })
 })
 
+viewsRouter.get("/reset", (req, res) => {
+    res.render("reset", {
+        title: "Reset Password"
+    })
+})
+
+/*viewsRouter.post("/api/form", async (req, res) => {
+    res.render("form", {
+        title: "Mailing",
+    })
+})
+*/
 export default viewsRouter

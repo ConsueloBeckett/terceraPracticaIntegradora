@@ -1,12 +1,12 @@
 
-import sendEmail from "../services/EmailService";
+import sendEmail from "../services/EmailService.js";
 
 const sendEmailController = async (req, res) => {
-    const { name, email, mesage } = req.body;
+    const { name, email, message } = req.body;
 
     try {
-        const respuesta = await sendEmail(name, email, mesage);
-        res.send(respuesta);
+        const response = await sendEmail(name, email, message);
+        res.send(response);
     } catch (error) {
         res.status(500).send(error);
     }

@@ -44,15 +44,6 @@ class ProductService {
             return null;
         }}
 
-    deleteProduct = async (productId) => {
-        try {
-            const deletedProduct = await this.productRepository.deleteProduct(productId)
-            return deletedProduct
-        } catch (e) {
-            console.error('Error to delete product:', e)
-            return null
-        }}
-
     obtainProductByLimit = async (limit) => {
         try {
             const products = await this.productRepository.obtainProductByLimit(limit)
@@ -87,6 +78,56 @@ class ProductService {
             console.error('Error to search product by main:', e)
             return null
         }}
+
+        // Nueva lógica para deleteProduct con permisos
+    deleteProduct = async (productId, userRole, userId) => {
+        try {
+            // Obtener el producto para verificar el owner
+            const product = await this.productRepository.obtainProductById(productId);
+            if (!product) {
+                console.error('Product not found');
+                return null;
+            }
+
+            // Verificar permisos para borrar
+            if (userRole === 'admin' || (userRole === 'premium' && product.ownerId === userId)) {
+                const deletedProduct = await this.productRepository.deleteProduct(productId);
+                return deletedProduct;
+            } else {
+                console.error('Insufficient permissions to delete the product');
+                return null;
+            }
+        } catch (e) {
+            console.error('Error to delete product:', e);
+            return null;
+        }
+    }
+    
+    // Nueva lógica para updateProduct con permisos
+    updateProduct = async (id, product, userRole, userId) => {
+        try {
+            // Obtener el producto para verificar el owner
+            const existingProduct = await this.productRepository.obtainProductById(id);
+            if (!existingProduct) {
+                console.error('Product not found');
+                return null;
+            }
+
+            // Verificar permisos para actualizar
+            if (userRole === 'admin' || (userRole === 'premium' && existingProduct.ownerId === userId)) {
+                const updatedProduct = await this.productRepository.updateProduct(id, product);
+                return updatedProduct;
+            } else {
+                console.error('Insufficient permissions to update the product');
+                return null;
+            }
+        } catch (e) {
+            console.error('Error to update product:', e);
+            return null;
+        }
+    }
+
+
 }
 
 export default ProductService

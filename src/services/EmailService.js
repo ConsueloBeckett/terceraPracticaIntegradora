@@ -1,13 +1,13 @@
 // correo.service.js
 import transporter from "../config/nodemailer.config.js";
 
-const sentEmail = (nombre, correo, mensaje) => {
+const sentEmail = (name, email, message) => {
     return new Promise((resolve, reject) => {
         const mailOptions = {
             from: "mconsuelobeckett@gmail.com",
             to: "consuelo.beckett@gmail.com",
             subject: "Message from contact",
-            text: `Name: ${nombre}\nEmail: ${correo}\nMesage: ${mensaje}`,
+            text: `Name: ${name}\nEmail: ${email}\nMesage: ${message}`,
         };
 
         transporter.sendMail(mailOptions, (error, info) => {

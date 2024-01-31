@@ -12,8 +12,8 @@ import viewsRouter from "./router/views.routes.js"
 import productsRouter from "./router/products.routes.js"
 import cartsRouter from "./router/carts.routes.js"
 import userRouter from "./router/user.routes.js"
-import nodemailer from "nodemailer"
-
+import emailRouter from "./router/email.router.js";
+//import nodemailer from "nodemailer"
 dotenv.config()
 
 const app = express()
@@ -31,16 +31,15 @@ app.use(express.urlencoded({ extended: true }))
 
 app.engine("handlebars", engine())
 app.set("view engine", "handlebars")
-app.set("views", path.resolve(__dirname + "/views"))
+app.set("views", path.resolve(__dirname, "/views"))
 
-app.use("/", express.static(__dirname + "/public"))
+app.use("/", express.static(path.resolve(__dirname, "public")));
 app.use("/", viewsRouter)
 
 app.use("/api/users", userRouter)
 app.use("/api/carts", cartsRouter)
 app.use("/api/products", productsRouter)
-//app.use("/api/form", )
-
+app.use("/api/email", emailRouter)
 
 
 
